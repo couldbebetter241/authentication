@@ -60,7 +60,7 @@ exports.refreshTokens = async (req, res, next) => {
             throw errOutput.Unauthorized();
         }
         const salt = await bcrypt.genSalt(12);
-        const user = await jwtLogic.checkRefToken(refTokenDecoded, accToken);
+        const user = await jwtLogic.checkRefToken(refTokenDecoded, accTokenInClientReq);
         const accessToken = await jwtLogic.makeAccessToken(user);
         const refToken = await jwtLogic.makeRefreshToken(userFromDb.uuid, accessToken);
         const refTokenHash = await sha256(refToken);
